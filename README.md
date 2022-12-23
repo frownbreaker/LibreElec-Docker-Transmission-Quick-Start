@@ -12,5 +12,24 @@ So why this update? I've a 4k Tv and noticed some content was taking a long time
 
 BEFORE YOU START don't try to use USB Flash drives or SD cards for this. Use SSDs or HDs there is a lot of IO and SD cards and flash cannot take the write intensity plus there cannot keep up with SUSTAINED writes and concurrent reads.
 
+Using the offical repo install docker (its under Add-ons services) then restart the RPI4, connect via SSH from a PC and enter the command below. Edit the -v commands to fit your setup in my case I've a USB drive plugged into a USB3 port on the RP4 (2m RAM) running of SD. Note how all my temp files are on the USB HD.
 
 
+docker run -d \
+--name=9091-transmission \
+--net=host \
+-e PUID=0 \
+-e PGID=0 \
+-e TZ=Europe/London \
+-e USER=admin \
+-e PASS=secret \
+-p 9091:9091 \
+-p 51413:51413 \
+-p 51413:51413/udp \
+-v /var/media/10TB/_dockerrp4avroom/.config/dockers/transmission/config:/config \
+-v /var/media/10TB/:/downloads \
+-v /var/media/10TB/watch:/watch \
+-v /storage:/storage \
+-v /media:/media \
+--restart unless-stopped \
+linuxserver/transmission
