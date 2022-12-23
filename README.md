@@ -42,3 +42,19 @@ docker update --restart always $(docker ps -q)
 If you are new to docker or need to polish up this is a good resource (scroll to the end for the more advanced commands)
 
 https://www.freecodecamp.org/news/a-beginners-guide-to-docker-how-to-create-your-first-docker-application-cc03de9b639f/
+
+Tranmission Temp files
+
+Transmission keeps a mad cache in /storage/.kodi/userdata/addon_data/service.system.docker/docker (as we are running transmission in docker the files are stored in the overlay2 FS. You can't really delete the transmission cache, it but worse it writes it to SD card so the writes can wear the SD card causing it to fail after a 100k writes. This does not happen on SSDs or HD, even if you point the download directory to NAS. At this point you could reconfigure docker to run from a new location on HD / SSD not SD card (shutdown docker, point docker to start elsewhere, rsyhch the old to new locations, restart docker, details here: https://linuxconfig.org/how-to-move-docker-s-default-var-lib-docker-to-another-directory-on-ubuntu-debian-linux) or do what I did and set the RP4 to boot off HDD! I did this and restored my backup enven though I'd uninstalled docker add-on and rm -r the docker directory the docker cache was still around with images!  If like me you need to flush your docker image cache, remove all containers etc this will help
+
+docker ps -a
+docker rmi -f 'linuxserver/transmission:latest'
+docker ps -a
+docker rmi -f "9091-transmission"
+docker ls -a
+docker ps -a
+docker rm 30edd65c0872493cb350850b0f17c3fab67b403092f8e538639190f67820e872
+docker ps -a
+docker ls -a
+docker image ls
+docker image rm linuxserver/transmission
