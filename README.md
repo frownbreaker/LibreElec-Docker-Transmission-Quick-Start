@@ -35,7 +35,10 @@ docker run -d \
 linuxserver/transmission
 
 
+If some of the setting are not what you wanted (take the time to test out a few small samples) you can stop the container and delete it, creating a new one with updated settings is fast. Once things are working as you want you can set them to run 24x7 unless manually stopped, restart will start the docker daemon and start the container on reboot
 
-If you are new to docker or need to polish up this is a good resource
+docker update --restart always $(docker ps -q)
+
+If you are new to docker or need to polish up this is a good resource (scroll to the end for the more advanced commands)
 
 https://www.freecodecamp.org/news/a-beginners-guide-to-docker-how-to-create-your-first-docker-application-cc03de9b639f/
